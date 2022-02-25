@@ -56,10 +56,28 @@ function displayBooks(myLibrary) {
       const newLibrary = removeBook(i);
       displayBooks(newLibrary);
     });
+    let liRemoveBt = document.createElement("li");
+    liRemoveBt.appendChild(removeBt);
+    ul.appendChild(liRemoveBt);
 
-    let li = document.createElement("li");
-    li.appendChild(removeBt);
-    ul.appendChild(li);
+    //add toggle read button
+    let toggleReadBt = document.createElement("button");
+    toggleReadBt.id = `toggleRead-${i}`;
+    if (myLibrary[i].read) toggleReadBt.textContent = "mark book as unread";
+    else toggleReadBt.textContent = "mark book as read";
+    toggleReadBt.addEventListener("click", (e) => {
+      e.preventDefault();
+      myLibrary[i].toggleRead();
+
+      //update the card
+      document.querySelector(`#read-${i}`).checked = myLibrary[i].read;
+      if (myLibrary[i].read) toggleReadBt.textContent = "mark book as unread";
+      else toggleReadBt.textContent = "mark book as read";
+    });
+
+    let liToggleBt = document.createElement("li");
+    liToggleBt.appendChild(toggleReadBt);
+    ul.appendChild(liToggleBt);
 
     form.appendChild(ul);
     card.appendChild(form);
