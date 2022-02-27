@@ -36,29 +36,19 @@ function displayBooks(myLibrary) {
         let li = document.createElement("li");
         let input = document.createElement("input");
         input.id = `${key}-${i}`;
-        console.log(key);
-        if (key !== "read") input.value = myLibrary[i][key];
+        if (key === "title") input.value = myLibrary[i][key];
+        else if (key === "author") input.value = "by " + myLibrary[i][key];
+        else if (key === "pages") input.value = myLibrary[i][key] + " pages.";
         else {
           input.type = "checkbox";
           input.checked = myLibrary[i][key];
+          input.disabled = true;
         }
         input.readOnly = true;
         li.appendChild(input);
         ul.appendChild(li);
       }
     }
-    //add remove book button
-    let removeBt = document.createElement("button");
-    removeBt.id = `remove-${i}`;
-    removeBt.textContent = "Remove Book";
-    removeBt.addEventListener("click", (e) => {
-      e.preventDefault();
-      const newLibrary = removeBook(i);
-      displayBooks(newLibrary);
-    });
-    let liRemoveBt = document.createElement("li");
-    liRemoveBt.appendChild(removeBt);
-    ul.appendChild(liRemoveBt);
 
     //add toggle read button
     let toggleReadBt = document.createElement("button");
@@ -78,6 +68,19 @@ function displayBooks(myLibrary) {
     let liToggleBt = document.createElement("li");
     liToggleBt.appendChild(toggleReadBt);
     ul.appendChild(liToggleBt);
+
+    //add remove book button
+    let removeBt = document.createElement("button");
+    removeBt.id = `remove-${i}`;
+    removeBt.textContent = "Remove Book";
+    removeBt.addEventListener("click", (e) => {
+      e.preventDefault();
+      const newLibrary = removeBook(i);
+      displayBooks(newLibrary);
+    });
+    let liRemoveBt = document.createElement("li");
+    liRemoveBt.appendChild(removeBt);
+    ul.appendChild(liRemoveBt);
 
     form.appendChild(ul);
     card.appendChild(form);
